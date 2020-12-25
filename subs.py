@@ -7,8 +7,8 @@ import os
 
 
 def get_subs(page_token=None):
-    channel_id = os.environ.get('YT_CHANNEL_ID')
-    developer_key = os.environ.get('YT_API_KEY')
+    channel_id = os.environ.get("YT_CHANNEL_ID")
+    developer_key = os.environ.get("YT_API_KEY")
 
     api_service_name = "youtube"
     api_version = "v3"
@@ -41,11 +41,11 @@ def get_subs(page_token=None):
 
 
 def main():
-    pattern = re.compile('[^A-Za-z0-9 ]+')
+    pattern = re.compile("[^A-Za-z0-9 ]+")
 
     for i in get_subs():
         i = i["snippet"]
-        title = pattern.sub('', i["title"]).rstrip()
+        title = pattern.sub("", i["title"]).rstrip()
         channel_id = i["resourceId"]["channelId"]
         feed = "https://www.youtube.com/feeds/videos.xml?channel_id=" + channel_id
         print(feed, '"~' + title + '" video')
