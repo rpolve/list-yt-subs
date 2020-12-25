@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 import googleapiclient.discovery
+import re
 import os
 
 
@@ -40,9 +41,14 @@ def get_subs(page_token=None):
 
 
 def main():
+    pattern = re.compile("[^A-Za-z0-9 ]+")
+
     for i in get_subs():
-        channel_id = i["snippet"]["resourceId"]["channelId"]
-        print(channel_id)
+        i = i["snippet"]
+        title = pattern.sub("", i["title"]).rstrip()
+        channel_id = i["resourceId"]["channelId"]
+        feed = "https://www.youtube.com/feeds/videos.xml?channel_id=" + channel_id
+        print(feed, '"~' + title + '" video')
 
 
 if __name__ == "__main__":
